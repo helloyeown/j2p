@@ -27,4 +27,9 @@ public class FileBoard {
     // -> 새로 컬렉션 추가하면 절대 안 됨
     // 이미지의 crud도 보드가 관리 -> 하위 엔티티까지 한 번에 save 가능
 
+    public void addImage(FileBoardImage image){
+        image.changeOrd(images.size());
+        images.add(image);
+    }
+
 }
