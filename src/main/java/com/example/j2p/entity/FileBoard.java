@@ -3,6 +3,8 @@ package com.example.j2p.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.BatchSize;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,7 +24,7 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "images")
 public class FileBoard {
     
     @Id
@@ -35,8 +37,9 @@ public class FileBoard {
 
 	private String writer;
 
+    @BatchSize(size = 20) // 연관된 엔티티를 로딩할 때 지정된 갯수만큼 한 번에 로딩하는 일괄 처리 크기 설정 (n+1 문제 해결)
     // 연관 관계 명시 안 하면 에러
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)  // 파일 보드가 여러 개의 이미지를 가짐
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)  // 파일 보드가 여러 개의 이미지를 가짐
     // 부모 엔티티가 영속 상태로 전환될 때 자식 엔티티도 함께 영속화 되고, 부모 엔티티가 삭제될 때 관련 자식 엔티티도 함께 삭제 됨
     @JoinColumn(name = "board") // 이미지가 보드에 소속되는 종속 관계를 맺어줌
     @Builder.Default

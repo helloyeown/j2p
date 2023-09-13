@@ -6,13 +6,16 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import com.example.j2p.entity.FileBoard;
 import com.example.j2p.entity.FileBoardImage;
 
 import jakarta.transaction.Transactional;
-import lombok.ToString;
 import lombok.extern.log4j.Log4j2;
+
 
 @SpringBootTest
 @Log4j2
@@ -60,6 +63,17 @@ public class FileBoardRepositoryTests {
         FileBoard board = result.orElseThrow();
 
         log.info(board);
+
+    }
+
+    @Test
+    public void listTest(){
+
+        Pageable pageable = PageRequest.of(0, 10);
+
+        Page<FileBoard> result = repository.findAll(pageable);
+
+        result.get().forEach(board -> log.info(board));
 
     }
 
