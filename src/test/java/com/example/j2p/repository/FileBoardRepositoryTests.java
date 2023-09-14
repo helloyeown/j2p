@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import com.example.j2p.dto.PageRequestDTO;
 import com.example.j2p.entity.FileBoard;
 import com.example.j2p.entity.FileBoardImage;
 
@@ -74,6 +75,16 @@ public class FileBoardRepositoryTests {
         Page<FileBoard> result = repository.findAll(pageable);
 
         result.get().forEach(board -> log.info(board));
+
+    }
+
+    @Test
+    @Transactional
+    public void testListQuery(){
+
+        PageRequestDTO dto = new PageRequestDTO();
+
+        repository.list(dto);
 
     }
 
