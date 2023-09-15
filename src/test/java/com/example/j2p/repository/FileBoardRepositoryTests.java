@@ -88,4 +88,18 @@ public class FileBoardRepositoryTests {
 
     }
 
+    @Test
+    public void readQueryTest(){
+
+        log.info(repository.selectOne(1L));
+
+    }
+
+    @Test
+    public void deleteTest(){
+
+        repository.deleteById(1L);
+
+    }
+
 }
