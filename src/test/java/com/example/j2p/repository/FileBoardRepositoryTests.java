@@ -91,7 +91,7 @@ public class FileBoardRepositoryTests {
     @Test
     public void readQueryTest(){
 
-        log.info(repository.selectOne(1L));
+        log.info(repository.selectOne(2L));
 
     }
 
