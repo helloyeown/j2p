@@ -4,13 +4,14 @@ import com.example.j2p.dto.FileBoardListDTO;
 import com.example.j2p.dto.PageRequestDTO;
 import com.example.j2p.dto.PageResponseDTO;
 import com.example.j2p.dto.ProductDTO;
+import com.example.j2p.dto.ProductListDTO;
 
 import jakarta.transaction.Transactional;
 
 @Transactional
 public interface ProductService {
     
-    PageResponseDTO<FileBoardListDTO> list(PageRequestDTO requestDTO);
+    PageResponseDTO<ProductListDTO> list(PageRequestDTO requestDTO);
 
     Long register(ProductDTO productDTO);
 
