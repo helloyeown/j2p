@@ -3,6 +3,7 @@ package com.example.j2p.controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,11 +14,13 @@ import com.example.j2p.dto.ProductListDTO;
 import com.example.j2p.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin
 @RequestMapping("/api/products")
+@Log4j2
 public class ProductController {
     
     private final ProductService service;
@@ -32,7 +35,9 @@ public class ProductController {
 
     // 등록
     @PostMapping("/")
-    public void register(ProductDTO dto){
+    public void register(@RequestBody ProductDTO dto){
+
+        log.info(dto);
 
         service.register(dto);
 
