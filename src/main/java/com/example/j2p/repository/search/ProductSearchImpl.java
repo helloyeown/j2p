@@ -13,6 +13,7 @@ import com.example.j2p.dto.ProductListDTO;
 import com.example.j2p.entity.Product;
 import com.example.j2p.entity.QProduct;
 import com.example.j2p.entity.QProductImage;
+import com.example.j2p.entity.QProductReview;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 
@@ -27,9 +28,12 @@ public class ProductSearchImpl extends QuerydslRepositorySupport implements Prod
 
         QProduct product = QProduct.product;
         QProductImage productImage = QProductImage.productImage;
+        QProductReview review = QProductReview.productReview;
 
         JPQLQuery<Product> query = from(product);
         query.leftJoin(product.images, productImage);
+        query.leftJoin(review).on(review.product.eq(product));
+
         query.where(productImage.ord.eq(0));
         query.where(product.delFlag.eq(Boolean.FALSE));
 
@@ -38,8 +42,11 @@ public class ProductSearchImpl extends QuerydslRepositorySupport implements Prod
 
         this.getQuerydsl().applyPagination(pageable, query);
 
+        query.groupBy(product);
+
         JPQLQuery<ProductListDTO> dtoQuery = query.select(Projections.bean(ProductListDTO.class, 
-            product.pno, product.pname, product.price, productImage.fname));
+            product.pno, product.pname, product.price, productImage.fname, productImage.fname.min().as("fname"),
+            review.score.avg().as("reviewAvg"), review.score.count().as("reviewCnt")));
 
         List<ProductListDTO> list = dtoQuery.fetch();
         long totalCount = dtoQuery.fetchCount();

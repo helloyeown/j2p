@@ -19,17 +19,27 @@ public class ProductReviewRepositoryTests {
     @Test
     public void insertTest(){
 
-        Product product = Product.builder().pno(1L).build();
+        Long[] pnoArr = {106L, 103L, 102L, 100L, 98L};
 
-        ProductReview review = ProductReview.builder()
-            .content("repository insert test")
-            .reviewer("user")
-            .score(5)
-            .product(product)
-            .build();
+        for(Long pno : pnoArr){
 
-        repository.save(review);
+            int score = (int)(Math.random() * 5) + 1;
 
+            Product product = Product.builder().pno(pno).build();
+    
+            for(int i=0; i<100; i++){
+    
+                ProductReview review = ProductReview.builder()
+                    .content("repository insert test" + i)
+                    .reviewer("user" + i%10)
+                    .score(score)
+                    .product(product)
+                    .build();
+    
+                repository.save(review);
+    
+            }
+        }
     }
 
 }
