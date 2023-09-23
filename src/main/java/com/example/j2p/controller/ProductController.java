@@ -1,5 +1,7 @@
 package com.example.j2p.controller;
 
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,11 +37,11 @@ public class ProductController {
 
     // 등록
     @PostMapping("/")
-    public void register(@RequestBody ProductDTO dto){
+    public Map<String, Long> register(@RequestBody ProductDTO dto){
 
         log.info(dto);
 
-        service.register(dto);
+        return Map.of("result", dto.getPno());
 
     }
 
