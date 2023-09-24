@@ -1,5 +1,6 @@
 package com.example.j2p.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +15,7 @@ import com.example.j2p.dto.PageResponseDTO;
 import com.example.j2p.dto.ProductDTO;
 import com.example.j2p.dto.ProductListDTO;
 import com.example.j2p.service.ProductService;
+import com.example.j2p.util.FileUploader;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -26,6 +28,7 @@ import lombok.extern.log4j.Log4j2;
 public class ProductController {
     
     private final ProductService service;
+    private final FileUploader uploader;
 
     // 목록
     @GetMapping("/list")
@@ -40,6 +43,8 @@ public class ProductController {
     public Map<String, Long> register(@RequestBody ProductDTO dto){
 
         log.info(dto);
+
+        List<String> fileNames = uploader.uploadFiles(dto.getFiles());
 
         return Map.of("result", dto.getPno());
 
