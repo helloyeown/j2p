@@ -44,9 +44,12 @@ public class ProductController {
 
         log.info(dto);
 
-        List<String> fileNames = uploader.uploadFiles(dto.getFiles());
+        List<String> fileNames = uploader.uploadFiles(dto.getFiles(), true);
+        dto.setImages(fileNames);
 
-        return Map.of("result", dto.getPno());
+        Long pno = service.register(dto);
+
+        return Map.of("result", pno);
 
     }
 
