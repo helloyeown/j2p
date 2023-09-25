@@ -40,5 +40,22 @@ public class ProductServiceImpl implements ProductService {
         return repository.save(product).getPno();
 
     }
+
+    @Override
+    public ProductDTO readOne(Long pno) {
+
+        Product product = repository.selectOne(pno);
+
+        ProductDTO dto = ProductDTO.builder()
+            .pno(product.getPno())
+            .pname(product.getPname())
+            .pdesc(product.getPdesc())
+            .price(product.getPrice())
+            .images(product.getImages().stream().map(pi -> pi.getFname()).toList())
+            .build();
+
+        return dto;
+
+    }
     
 }

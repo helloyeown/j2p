@@ -45,4 +45,11 @@ public class ProductServiceTests {
 
     }
 
+    @Test
+    public void readTest(){
+
+        log.info(service.readOne(1L));
+
+    }
+
 }
