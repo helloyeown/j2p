@@ -71,4 +71,25 @@ public class FileUploader {
 
     }
 
+    // 파일 삭제(DB에선 삭제하지 않고 업로드만)
+    public void deleteFiles(List<String> fileNames){
+
+        if(fileNames == null || fileNames.size() == 0){
+            return;
+        }
+
+        // 예외 처리 때문에 람다식 사용x
+        for (String fname : fileNames) {
+            // 원본, 썸네일
+            File original = new File(path, fname);
+            File thumb = new File(path, "s_" + fname);
+
+            if(thumb.exists()){
+                thumb.delete();
+            }
+
+            original.delete();
+        }
+    }
+
 }
