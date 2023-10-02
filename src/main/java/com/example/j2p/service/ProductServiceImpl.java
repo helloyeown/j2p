@@ -1,5 +1,8 @@
 package com.example.j2p.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.example.j2p.dto.FileBoardListDTO;
@@ -9,6 +12,7 @@ import com.example.j2p.dto.ProductDTO;
 import com.example.j2p.dto.ProductListDTO;
 import com.example.j2p.entity.Product;
 import com.example.j2p.repository.ProductRepository;
+import com.example.j2p.util.FileUploader;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository repository;
+    private final FileUploader fileUploader;
 
     @Override
     public PageResponseDTO<ProductListDTO> list(PageRequestDTO requestDTO) {
@@ -55,6 +60,17 @@ public class ProductServiceImpl implements ProductService {
             .build();
 
         return dto;
+
+    }
+
+    @Override
+    public void delete(Long pno) {
+
+        Product product = repository.selectOne(pno);
+
+        List<String> fileNames = product.getImages().stream().map(pi -> pi.getFname()).collect(Collectors.toList());
+
+        fileUploader.deleteFiles(fileNames);
 
     }
     
