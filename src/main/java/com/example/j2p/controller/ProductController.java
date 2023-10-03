@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,6 +60,16 @@ public class ProductController {
     public ProductDTO readOne(@PathVariable("pno") Long pno){
 
         return service.readOne(pno);
+
+    }
+
+    // 삭제
+    @DeleteMapping("/{pno}")
+    public Map<String, Long> delete(@PathVariable("pno") Long pno){
+
+        service.delete(pno);
+
+        return Map.of("result", pno);
 
     }
 
