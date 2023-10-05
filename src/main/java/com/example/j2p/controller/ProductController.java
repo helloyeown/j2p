@@ -42,7 +42,7 @@ public class ProductController {
 
     // 등록
     @PostMapping("/")
-    public Map<String, Long> register(@RequestBody ProductDTO dto){
+    public Map<String, Long> register(ProductDTO dto){
 
         log.info(dto);
 
