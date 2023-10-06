@@ -72,6 +72,9 @@ public class ProductServiceImpl implements ProductService {
 
         fileUploader.deleteFiles(fileNames);
 
+        product.changeDel(true);
+        repository.save(product);
+
     }
     
 }
