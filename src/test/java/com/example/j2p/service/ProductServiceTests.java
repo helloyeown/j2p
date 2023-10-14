@@ -52,4 +52,15 @@ public class ProductServiceTests {
 
     }
 
+    @Test
+    public void coding(){
+        
+        for(int i=4; i<=5; i++){
+            for(int j=1; j<=9; j++){
+                log.info(i + "*" + j + "=" + i*j);
+            }
+        }
+
+    }
+
 }
